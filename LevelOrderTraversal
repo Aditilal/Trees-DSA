@@ -1,0 +1,66 @@
+/*
+Create a queue of Node pointer
+insert the root and null(indicates a level is done)
+pop the front element and analayse the following:
+ Check if a left node exists if yes then push it too the queue
+ Check if a right node exists then push it to the queue
+if the popped element is NULL and the queue is not empty then simply push null to indicates level up
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+struct Node{
+    int data;
+    Node *left;
+    Node*right;
+    Node(int val)
+    {
+        data = val;
+        left = NULL;
+        right = NULL;
+    }
+};
+void LevelOrderTraversal(Node *root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    queue<Node*> q;
+    q.push(root);
+    q.push(NULL);
+
+    while(!q.empty())
+    {
+        Node* node = q.front();
+        q.pop();
+        if(node!=NULL)
+        {
+            cout<<node->data<< " ";
+            if(node->left){
+                q.push(node->left);
+            }
+            if(node->right)
+            {
+                q.push(node->right);
+            }
+        }
+        else if(!q.empty())
+        {
+            q.push(NULL);
+        }
+    }
+}
+int32_t main(){
+    Node* root = new Node(1);
+    root->left = new Node(2);
+    root->right = new Node(3);
+    root->left->left = new Node(4);
+    root->left->right = new Node(5);
+    root->right->left = new Node(6);
+    root->right->right = new Node(7);
+    
+    
+    LevelOrderTraversal(root);
+    return 0;
+}
