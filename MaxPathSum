@@ -1,0 +1,49 @@
+/*
+Value of the node
+Max path through left child + node val
+Max path thrugh right child + node val
+Max path through left child + Max path through right child + node val
+*/
+
+#include<bits/stdc++.h>
+struct Node{
+    int data;
+    int *left;
+    int *right;
+    void Node(int val)
+    {
+        data = val;
+        left = NULL;
+        right = NULL;
+    }
+}
+
+int maxPathSum(Node* root)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    int ans = INT_MIN;
+    int a = root->data;
+    int b = root->data+maxPathSum(root->left);
+    int c = root->data+maxPathSum(root->right);
+    int d = root->data+maxPathSum(root->left)+maxPathSum(root->right);
+
+    int maxSum = max(max(a,b),max(c,d));
+    ans = max(ans,maxSum);
+    return ans;
+
+}
+int main()
+{
+    Node* root = new Node(1);
+    root->left = new Node(2);
+    root->right = new Node(3);
+    root->left->left = new Node(4);
+    root->left->right = new Node(5);
+    root->right->left = new Node(6);
+    root->right->right = new Node(7);
+    return maxPathSum(root);
+    
+}
