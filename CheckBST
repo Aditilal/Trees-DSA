@@ -1,0 +1,51 @@
+/*
+Strategy :
+left(min,node) < node(min,max) <right(node,max)
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+struct Node{
+    int data;
+    Node *left;
+    Node *right;
+    Node(int val)
+    {
+        data = val;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+bool CheckBST(Node* root,Node* min,Node* max)
+{
+    if(root==NULL)
+    {
+        return true;
+    }
+    if(min!=NULL && root->data<=min->data)
+    {
+        return false;
+    }
+    if(max!=NULL && root->data>=max->data)
+    {
+        return false;
+    }
+    bool leftBST = CheckBST(root->left,min,root);
+    bool RightBSt = CheckBST(root->right,root,max);
+    return leftBST && RightBSt;
+}
+int main()
+{
+    Node* root = new Node(5);
+    root->left = new Node(2);
+    root->right = new Node(8);
+    if(CheckBST(root,NULL,NULL)==true)
+    {
+        cout<<"Valid BST\n";
+    }
+    else{
+        cout<<"Not a valid BST\n";
+    }
+    return 0;
+}
